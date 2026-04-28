@@ -25,7 +25,7 @@
             color: var(--dark-text);
         }
 
-        /* HEADER CHIA MÀU CHUẨN XÁC, KHÔNG BỊ LỆCH */
+        /* HEADER CHIA MÀU CHUẨN XÁC THEO TỈ LỆ LATEX */
         header {
             position: relative;
             background: var(--navy);
@@ -34,12 +34,12 @@
             overflow: hidden;
         }
 
-        /* Mảng màu Teal bên phải (Giống TikZ trong LaTeX) */
+        /* Mảng màu Teal bên phải (Giống block TikZ trong LaTeX) */
         header::before {
             content: '';
             position: absolute;
             top: 0; right: 0; bottom: 0;
-            width: 38%; /* Độ rộng mảng màu */
+            width: 36%; /* Khóa cứng tỉ lệ mảng màu */
             background: var(--teal);
             z-index: 0;
         }
@@ -56,8 +56,8 @@
         }
 
         .header-info {
-            flex: 1;
-            min-width: 300px;
+            flex: 0 0 60%; /* Chiếm 60% không gian bên trái */
+            box-sizing: border-box;
             padding-right: 2rem;
         }
 
@@ -73,10 +73,14 @@
             margin: 5px 0 0 0;
         }
 
-        /* Liên hệ nổi thẳng trên nền Teal như CV */
+        /* ĐẨY LỆCH LIÊN HỆ SANG PHẢI CHO CÂN ĐỐI VỚI NỀN TEAL */
         .header-contact {
-            flex: 0 0 320px;
-            padding-left: 2rem;
+            flex: 0 0 36%; /* Chiếm đúng 36% không gian của mảng màu Teal */
+            padding-left: 3rem; /* Lực đẩy cực mạnh để xê dịch toàn bộ text sang phải */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .header-contact a, .header-contact span {
@@ -96,7 +100,7 @@
             width: 25px;
             font-size: 1.2rem;
             text-align: center;
-            margin-right: 12px;
+            margin-right: 15px; /* Tăng khoảng cách giữa icon và chữ */
             color: var(--light-teal);
         }
 
@@ -219,8 +223,10 @@
         /* Reponsive cho Mobile */
         @media (max-width: 768px) {
             header::before { display: none; } /* Tắt mảng Teal trên mobile */
+            header { background: var(--navy); }
+            .header-info { flex: 1 1 100%; padding-right: 0; text-align: center; }
             .header-info h1 { font-size: 2.2rem; }
-            .header-contact { padding-left: 0; flex: 1 1 100%; margin-top: 1.5rem; }
+            .header-contact { flex: 1 1 100%; padding-left: 0; margin-top: 1.5rem; align-items: center; }
         }
     </style>
 </head>
