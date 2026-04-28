@@ -53,35 +53,18 @@
             margin: 5px 0 0 0;
         }
 
-        /* CHỈNH LẠI KHUNG LIÊN HỆ CHO THẲNG TẮP VÀ ĐẸP MẮT */
         .header-contact {
-            background: rgba(0,0,0,0.15);
-            padding: 1.5rem 2rem;
-            border-radius: 8px;
-            min-width: 260px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            background: rgba(0,0,0,0.1);
+            padding: 1rem;
+            border-radius: 5px;
+            min-width: 250px;
         }
 
-        .header-contact a, .header-contact span {
+        .header-contact a {
             color: white;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            margin: 12px 0;
-            font-size: 1.05rem;
-        }
-
-        .header-contact a:hover {
-            color: var(--light-teal);
-        }
-
-        /* Khóa cứng độ rộng icon để chữ thẳng hàng */
-        .header-contact i {
-            width: 25px;
-            font-size: 1.2rem;
-            text-align: center;
-            margin-right: 12px;
-            color: var(--light-teal);
+            display: block;
+            margin: 5px 0;
         }
 
         /* Section Layout */
@@ -198,7 +181,7 @@
         @media (max-width: 768px) {
             header { background: var(--navy); }
             .header-info h1 { font-size: 2rem; }
-            .header-contact { margin-top: 1rem; width: 100%; box-sizing: border-box; }
+            .header-contact { margin-top: 1rem; width: 100%; }
         }
     </style>
 </head>
@@ -213,8 +196,8 @@
         <div class="header-contact">
             <a href="mailto:ovnhoka@gmail.com"><i class="fas fa-envelope"></i> ovnhoka@gmail.com</a>
             <a href="tel:0768533364"><i class="fas fa-mobile-alt"></i> 0768 533 364</a>
-            <span><i class="fas fa-map-marker-alt"></i> TP. Hồ Chí Minh</span>
-            <a href="https://github.com/nguyenhaidangg" target="_blank"><i class="fab fa-github"></i> github.com/nguyenhaidangg</a>
+            <a><i class="fas fa-map-marker-alt"></i> TP. Hồ Chí Minh</a>
+            <a href="https://github.com/nguyenhaidangg"><i class="fab fa-github"></i> github.com/nguyenhaidangg</a>
         </div>
     </div>
 </header>
@@ -248,9 +231,7 @@
             <li>Tích hợp Gemini API và Vector DB Pinecone để xây dựng luồng AI Matching.</li>
             <li>Triển khai hệ thống Chat Real-time đa luồng sử dụng Socket.io/WebSockets.</li>
         </ul>
-    </div>
-
-    <div class="project-card">
+    </div> <div class="project-card">
         <div class="project-header">
             <h3>Fashion Shop - Sàn thương mại điện tử đa người dùng</h3>
             <span class="project-date">10/2025 -- 12/2025</span>
