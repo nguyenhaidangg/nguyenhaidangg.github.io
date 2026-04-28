@@ -25,20 +25,40 @@
             color: var(--dark-text);
         }
 
-        /* Header chia màu mượt và căn lề thẳng với nội dung */
+        /* HEADER CHIA MÀU CHUẨN XÁC, KHÔNG BỊ LỆCH */
         header {
-            background: linear-gradient(to right, var(--navy) 65%, var(--teal) 35%);
+            position: relative;
+            background: var(--navy);
             color: white;
             padding: 4rem 2rem;
+            overflow: hidden;
+        }
+
+        /* Mảng màu Teal bên phải (Giống TikZ trong LaTeX) */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0;
+            width: 38%; /* Độ rộng mảng màu */
+            background: var(--teal);
+            z-index: 0;
         }
 
         .header-content {
+            position: relative;
+            z-index: 1;
             max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+        }
+
+        .header-info {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 2rem;
         }
 
         .header-info h1 {
@@ -53,13 +73,10 @@
             margin: 5px 0 0 0;
         }
 
-        /* CHỈNH LẠI KHUNG LIÊN HỆ CHO THẲNG TẮP VÀ ĐẸP MẮT */
+        /* Liên hệ nổi thẳng trên nền Teal như CV */
         .header-contact {
-            background: rgba(0,0,0,0.15);
-            padding: 1.5rem 2rem;
-            border-radius: 8px;
-            min-width: 260px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            flex: 0 0 320px;
+            padding-left: 2rem;
         }
 
         .header-contact a, .header-contact span {
@@ -75,7 +92,6 @@
             color: var(--light-teal);
         }
 
-        /* Khóa cứng độ rộng icon để chữ thẳng hàng */
         .header-contact i {
             width: 25px;
             font-size: 1.2rem;
@@ -84,7 +100,7 @@
             color: var(--light-teal);
         }
 
-        /* Section Layout */
+        /* Layout các phần bên dưới */
         section {
             max-width: 1000px;
             margin: 2rem auto;
@@ -152,15 +168,20 @@
             font-weight: bold;
         }
 
+        .project-card p {
+            margin: 8px 0;
+        }
+
         .tech-stack {
             font-style: italic;
             color: var(--mid-gray);
-            margin-bottom: 10px;
             display: block;
+            margin-bottom: 10px;
         }
 
         ul {
             padding-left: 1.2rem;
+            margin-top: 5px;
         }
 
         ul li {
@@ -195,10 +216,11 @@
             margin-top: 4rem;
         }
 
+        /* Reponsive cho Mobile */
         @media (max-width: 768px) {
-            header { background: var(--navy); }
-            .header-info h1 { font-size: 2rem; }
-            .header-contact { margin-top: 1rem; width: 100%; box-sizing: border-box; }
+            header::before { display: none; } /* Tắt mảng Teal trên mobile */
+            .header-info h1 { font-size: 2.2rem; }
+            .header-contact { padding-left: 0; flex: 1 1 100%; margin-top: 1.5rem; }
         }
     </style>
 </head>
@@ -227,10 +249,10 @@
 <section id="skills">
     <h2>Kỹ năng chuyên môn</h2>
     <div class="skill-grid">
-        <div class="skill-item"><span>Frontend</span>Vue.js 3, TypeScript, Tailwind CSS</div>
-        <div class="skill-item"><span>Backend</span>Node.js, Express.js, TypeScript</div>
-        <div class="skill-item"><span>Database</span>MySQL, MongoDB, Redis, Pinecone</div>
-        <div class="skill-item"><span>Công cụ</span>Git/GitHub, Docker, Linux, LaTeX</div>
+        <div class="skill-item"><span>Frontend</span>Vue.js 3, TypeScript, Tailwind CSS, HTML5/CSS3.</div>
+        <div class="skill-item"><span>Backend</span>Node.js, Express, TypeScript.</div>
+        <div class="skill-item"><span>Database</span>MySQL (Relational), MongoDB (Document), Redis (Caching), Pinecone (Vector Search).</div>
+        <div class="skill-item"><span>Công cụ</span>Git/GitHub, Docker, Linux/CLI, LaTeX, Postman.</div>
     </div>
 </section>
 
@@ -239,15 +261,17 @@
 
     <div class="project-card">
         <div class="project-header">
-            <h3>Job Portal - Tuyển dụng thông minh & Chat Real-time</h3>
+            <h3>Job Portal - Nền tảng Tuyển dụng thông minh & Giao tiếp thời gian thực</h3>
             <span class="project-date">02/2026 -- Hiện tại</span>
         </div>
-        <span class="tech-stack">Tech: Vue 3, Node.js, Redis, Pinecone, Gemini API, Socket.io</span>
+        <p><strong>Mô tả:</strong> Hệ thống kết nối Candidate và Employer với cốt lõi là hệ thống đối sánh bằng AI và Chat Real-time.</p>
+        <span class="tech-stack">Công nghệ: Vue 3, Node.js, TypeScript, MySQL, MongoDB, Redis, Pinecone, Gemini API, Socket.io.</span>
+        <p><strong>Vai trò:</strong></p>
         <ul>
-            <li>Thiết kế kiến trúc phân tán Polyglot Persistence (MySQL, MongoDB, Pinecone).</li>
-            <li>Tích hợp Gemini API và Vector DB Pinecone để xây dựng luồng AI Matching.</li>
-            <li>Triển khai hệ thống Chat Real-time đa luồng sử dụng Socket.io/WebSockets.</li>
+            <li><strong>AI & Core Architecture:</strong> Thiết kế kiến trúc phân tán Polyglot Persistence (MySQL, MongoDB, Pinecone). Tích hợp Gemini API và Vector DB Pinecone để xây dựng luồng AI Matching thông minh.</li>
+            <li><strong>Real-time Communication:</strong> Chịu trách nhiệm chính thiết kế và triển khai hệ thống <strong>Chat Real-time đa luồng và Notifications tức thời sử dụng Socket.io/WebSockets</strong>. Tối ưu độ trễ truyền tải tin nhắn, xử lý trạng thái online/offline của người dùng Candidate, Employer và Admin.</li>
         </ul>
+        <p><strong>Kết quả:</strong> Vận hành trơn tru luồng AI Matching. Hệ thống giao tiếp thời gian thực hoạt động ổn định với độ trễ cực thấp, nâng cao trải nghiệm tương tác.</p>
     </div>
 
     <div class="project-card">
@@ -255,11 +279,14 @@
             <h3>Fashion Shop - Sàn thương mại điện tử đa người dùng</h3>
             <span class="project-date">10/2025 -- 12/2025</span>
         </div>
-        <span class="tech-stack">Tech: Vue 3, Node.js, SQL Server, Redis, VNPay, Node-cron</span>
+        <p><strong>Mô tả:</strong> Xây dựng nền tảng Marketplace hỗ trợ đa người bán (Multi-vendor), cho phép người dùng đăng ký gian hàng và tự quản lý kinh doanh.</p>
+        <span class="tech-stack">Công nghệ: Vue 3, Node.js, Express, TypeScript, SQL Server, Redis, VNPay, Node-cron.</span>
+        <p><strong>Vai trò:</strong></p>
         <ul>
-            <li>Thiết kế cơ sở dữ liệu phân quyền phức tạp (Buyer, Seller, Admin) với SQL Server.</li>
-            <li>Xây dựng Dashboard chuyên biệt cho Seller; tích hợp Flash sale tự động bằng Node-cron.</li>
+            <li><strong>Database & Authorization:</strong> Thiết kế cơ sở dữ liệu phân quyền phức tạp (Buyer, Seller, Admin) với SQL Server và xử lý xác thực JWT.</li>
+            <li><strong>Seller Dashboard & Features:</strong> Xây dựng Dashboard chuyên biệt cho Seller. Tích hợp Node-cron để tự động hóa các sự kiện giảm giá Flash sale và VNPay cho thanh toán trực tuyến.</li>
         </ul>
+        <p><strong>Kết quả:</strong> Hệ thống xử lý logic nghiệp vụ chặt chẽ, tối ưu trải nghiệm người bán và đảm bảo tính nhất quán dữ liệu thông qua Redis Cache.</p>
     </div>
 
     <div class="project-card">
@@ -267,20 +294,24 @@
             <h3>Fashion Shop (Hybrid & Distributed DB)</h3>
             <span class="project-date">10/2025 -- 12/2025</span>
         </div>
-        <span class="tech-stack">Tech: SQL Server (Replication), MongoDB, Cloudinary</span>
+        <p><strong>Mô tả:</strong> Hệ thống Thương mại điện tử phân tán vùng miền. Nền tảng E-commerce áp dụng mô hình Hybrid Database, tự động định tuyến và hiển thị sản phẩm dựa trên khu vực địa lý của người dùng.</p>
+        <span class="tech-stack">Công nghệ: Vue 3, Node.js, TypeScript, SQL Server (Replication), MongoDB, Cloudinary, VNPay.</span>
+        <p><strong>Vai trò & Đóng góp:</strong></p>
         <ul>
-            <li>Cấu hình SQL Server Replication để đồng bộ dữ liệu giữa Server Trung tâm và 3 chi nhánh.</li>
-            <li>Triển khai mô hình Hybrid DB: SQL Server cho giao dịch lõi và MongoDB cho dữ liệu phi cấu trúc.</li>
+            <li><em>Kiến trúc Phân tán (Distributed System):</em> Cấu hình <strong>SQL Server Replication</strong> (Distributor, Publication, Subscription) để phân mảnh và đồng bộ dữ liệu giao dịch từ Server Trung tâm về 3 chi nhánh (Hà Nội, Đà Nẵng, TP.HCM).</li>
+            <li><em>Hybrid Database:</em> Triển khai mô hình lưu trữ đa hệ quản trị. Sử dụng SQL Server cho các giao dịch lõi (đảm bảo ACID) và MongoDB để lưu trữ dữ liệu phi cấu trúc, tích hợp Cloudinary quản lý Media.</li>
         </ul>
+        <p><strong>Kết quả:</strong> Xây dựng thành công cơ sở dữ liệu phân tán, đảm bảo tính nhất quán (Data Consistency) trên toàn bộ các node và xử lý mượt mà nghiệp vụ thanh toán, giỏ hàng theo từng chi nhánh.</p>
     </div>
 </section>
 
 <section id="certificates">
-    <h2>Chứng chỉ & Khóa học</h2>
-    <div class="cert-row"><div class="cert-date">04/2026</div><div class="cert-name">Hands-On AI: Building LLM-Powered Apps — LinkedIn Learning</div></div>
-    <div class="cert-row"><div class="cert-date">04/2026</div><div class="cert-name">DevOps 101 & CI/CD for Beginners — Simplilearn</div></div>
-    <div class="cert-row"><div class="cert-date">03/2026</div><div class="cert-name">Node.js: Design Patterns — LinkedIn Learning</div></div>
-    <div class="cert-row"><div class="cert-date">03/2026</div><div class="cert-name">Intro to LLM & Generative AI — Google Cloud</div></div>
+    <h2>Chứng chỉ & Khóa học chuyên môn</h2>
+    <div class="cert-row"><div class="cert-date">04/2026</div><div class="cert-name"><strong>Hands-On AI: Building LLM-Powered Apps</strong> — <em>LinkedIn Learning</em></div></div>
+    <div class="cert-row"><div class="cert-date">04/2026</div><div class="cert-name"><strong>DevOps 101 & CI/CD for Beginners</strong> — <em>Simplilearn</em></div></div>
+    <div class="cert-row"><div class="cert-date">03/2026</div><div class="cert-name"><strong>Node.js: Design Patterns</strong> — <em>LinkedIn Learning</em></div></div>
+    <div class="cert-row"><div class="cert-date">03/2026</div><div class="cert-name"><strong>Intro to Large Language Models & Generative AI</strong> — <em>Google Cloud</em></div></div>
+    <div class="cert-row"><div class="cert-date">03/2026</div><div class="cert-name"><strong>Introduction to Cyber Security</strong> — <em>Simplilearn</em></div></div>
 </section>
 
 <section id="education">
@@ -292,7 +323,7 @@
 </section>
 
 <footer>
-    <p>&copy; 2026 Nguyễn Hải Đăng | Được xây dựng bằng niềm đam mê công nghệ</p>
+    <p>&copy; 2026 Nguyễn Hải Đăng | Sinh viên CNTT - ĐH Sư phạm TP.HCM</p>
 </footer>
 
 </body>
