@@ -74,14 +74,14 @@ Website được triển khai bằng GitHub Pages, hoạt động như một CV 
 
 ## 📸 Hình ảnh minh họa
 
-* Trang chủ
-  <img width="1899" height="911" alt="image" src="https://github.com/user-attachments/assets/5f0c6d4c-198b-4539-80ed-ac54f3ad226f" />
+### Trang chủ
+![Trang chủ](./images/home.png)
 
-* Trang dự án
-  <img width="1899" height="906" alt="image" src="https://github.com/user-attachments/assets/d4359789-1927-4bcb-b6cb-3b1acda52e08" />
+### Trang dự án
+![Trang dự án](./images/projects.png)
 
-* Trang chứng chỉ
- <img width="1898" height="813" alt="image" src="https://github.com/user-attachments/assets/768a0b9a-8bee-4223-8458-309d096686b6" />
+### Trang chứng chỉ
+![Trang chứng chỉ](./images/certificates.png)
 
 ---
 
