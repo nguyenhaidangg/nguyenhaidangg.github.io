@@ -25,38 +25,29 @@
             color: var(--dark-text);
         }
 
-        /* HEADER CHIA MÀU CHUẨN XÁC THEO TỈ LỆ LATEX */
+        /* KHẮC PHỤC TRIỆT ĐỂ LỖI LỆCH MÀU TRÊN MÀN HÌNH LỚN */
         header {
-            position: relative;
             background: var(--navy);
             color: white;
-            padding: 4rem 2rem;
+            padding: 4rem 0; /* Bỏ padding hai bên để khung trong tự canh */
             overflow: hidden;
-        }
-
-        /* Mảng màu Teal bên phải (Giống block TikZ trong LaTeX) */
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; bottom: 0;
-            width: 36%; /* Khóa cứng tỉ lệ mảng màu */
-            background: var(--teal);
-            z-index: 0;
+            position: relative;
         }
 
         .header-content {
-            position: relative;
-            z-index: 1;
             max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
         }
 
+        /* Cột Navy bên trái chiếm 63% (Giống 0.63\textwidth) */
         .header-info {
-            flex: 0 0 60%; /* Chiếm 60% không gian bên trái */
+            flex: 0 0 63%;
             box-sizing: border-box;
             padding-right: 2rem;
         }
@@ -73,14 +64,27 @@
             margin: 5px 0 0 0;
         }
 
-        /* ĐẨY LỆCH LIÊN HỆ SANG PHẢI CHO CÂN ĐỐI VỚI NỀN TEAL */
+        /* Cột Teal bên phải chiếm 33% (Giống 0.33\textwidth) */
         .header-contact {
-            flex: 0 0 36%; /* Chiếm đúng 36% không gian của mảng màu Teal */
-            padding-left: 3rem; /* Lực đẩy cực mạnh để xê dịch toàn bộ text sang phải */
+            flex: 0 0 33%;
             box-sizing: border-box;
+            position: relative;
+            padding-left: 1.5rem; /* Cách lề trong cho đẹp */
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+
+        /* Dùng Pseudo-element tạo mảng màu Teal khóa chặt vào khối Contact */
+        .header-contact::before {
+            content: '';
+            position: absolute;
+            top: -500px;
+            bottom: -500px;
+            left: 0; /* Khóa chính xác vào mép trái của khối Liên hệ */
+            right: -50vw; /* Trải dài bất tận sang lề phải màn hình */
+            background: var(--teal);
+            z-index: -1;
         }
 
         .header-contact a, .header-contact span {
@@ -88,23 +92,23 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            margin: 12px 0;
-            font-size: 1.05rem;
+            margin: 8px 0;
+            font-size: 0.95rem; /* Thu nhỏ chút xíu cho giống file CV */
         }
 
         .header-contact a:hover {
-            color: var(--light-teal);
+            color: var(--accent-blue);
         }
 
         .header-contact i {
             width: 25px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-align: center;
-            margin-right: 15px; /* Tăng khoảng cách giữa icon và chữ */
-            color: var(--light-teal);
+            margin-right: 12px;
+            color: white; /* Đổi icon về màu trắng cho giống chuẩn LaTeX */
         }
 
-        /* Layout các phần bên dưới */
+        /* Layout các phần bên dưới giữ nguyên */
         section {
             max-width: 1000px;
             margin: 2rem auto;
@@ -119,7 +123,6 @@
             margin-top: 2.5rem;
         }
 
-        /* Kỹ năng chuyên môn */
         .skill-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -138,7 +141,6 @@
             display: block;
         }
 
-        /* Project Card */
         .project-card {
             border: 1px solid #ddd;
             border-left: 5px solid var(--teal);
@@ -172,61 +174,26 @@
             font-weight: bold;
         }
 
-        .project-card p {
-            margin: 8px 0;
-        }
+        .project-card p { margin: 8px 0; }
+        .tech-stack { font-style: italic; color: var(--mid-gray); display: block; margin-bottom: 10px; }
+        ul { padding-left: 1.2rem; margin-top: 5px; }
+        ul li { margin-bottom: 5px; }
 
-        .tech-stack {
-            font-style: italic;
-            color: var(--mid-gray);
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        ul {
-            padding-left: 1.2rem;
-            margin-top: 5px;
-        }
-
-        ul li {
-            margin-bottom: 5px;
-        }
-
-        /* Chứng chỉ */
-        .cert-row {
-            display: flex;
-            margin-bottom: 8px;
-        }
-
+        .cert-row { display: flex; margin-bottom: 8px; }
         .cert-date {
-            background: var(--light-teal);
-            color: var(--teal);
-            padding: 5px 10px;
-            font-weight: bold;
-            min-width: 80px;
-            text-align: center;
+            background: var(--light-teal); color: var(--teal); padding: 5px 10px;
+            font-weight: bold; min-width: 80px; text-align: center;
         }
+        .cert-name { background: var(--light-gray); padding: 5px 15px; flex-grow: 1; }
 
-        .cert-name {
-            background: var(--light-gray);
-            padding: 5px 15px;
-            flex-grow: 1;
-        }
+        footer { text-align: center; padding: 3rem; background: var(--light-gray); margin-top: 4rem; }
 
-        footer {
-            text-align: center;
-            padding: 3rem;
-            background: var(--light-gray);
-            margin-top: 4rem;
-        }
-
-        /* Reponsive cho Mobile */
         @media (max-width: 768px) {
-            header::before { display: none; } /* Tắt mảng Teal trên mobile */
-            header { background: var(--navy); }
-            .header-info { flex: 1 1 100%; padding-right: 0; text-align: center; }
+            .header-content { flex-direction: column; }
+            .header-info { flex: 0 0 100%; padding-right: 0; text-align: center; }
             .header-info h1 { font-size: 2.2rem; }
-            .header-contact { flex: 1 1 100%; padding-left: 0; margin-top: 1.5rem; align-items: center; }
+            .header-contact { flex: 0 0 100%; padding-left: 0; margin-top: 1.5rem; align-items: center; width: 100%; padding: 2rem 0; }
+            .header-contact::before { left: -50vw; right: -50vw; } /* Kéo dài Teal toàn màn hình trên mobile */
         }
     </style>
 </head>
