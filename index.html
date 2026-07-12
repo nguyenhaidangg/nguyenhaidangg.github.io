@@ -1,303 +1,684 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nguyễn Hải Đăng | Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --navy: #1A2B4A;
-            --teal: #0D7377;
-            --light-teal: #E8F6F7;
-            --accent-blue: #A8D8DA;
-            --dark-text: #222222;
-            --mid-gray: #666666;
-            --light-gray: #F5F5F5;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nguyễn Hải Đăng | Full Stack Developer</title>
 
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background: #ffffff;
-            color: var(--dark-text);
-        }
+  <!-- Nhúng Tailwind CSS để style cực nhanh -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        /* KHẮC PHỤC TRIỆT ĐỂ LỖI LỆCH MÀU TRÊN MÀN HÌNH LỚN */
-        header {
-            background: var(--navy);
-            color: white;
-            padding: 4rem 0; /* Bỏ padding hai bên để khung trong tự canh */
-            overflow: hidden;
-            position: relative;
-        }
+  <!-- Nhúng FontAwesome cho các icon (GitHub, LinkedIn, Email) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-        .header-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
+  <!-- Nhúng Google Font (Inter) cho chữ hiện đại, dễ đọc -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        /* Cột Navy bên trái chiếm 63% (Giống 0.63\textwidth) */
-        .header-info {
-            flex: 0 0 63%;
-            box-sizing: border-box;
-            padding-right: 2rem;
-        }
+  <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
 
-        .header-info h1 {
-            font-size: 3rem;
-            margin: 0;
-            text-transform: uppercase;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
 
-        .header-info p {
-            font-size: 1.2rem;
-            color: var(--accent-blue);
-            margin: 5px 0 0 0;
-        }
+    /* Menu mobile: ẩn theo mặc định, hiện khi có class .open */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
 
-        /* Cột Teal bên phải chiếm 33% (Giống 0.33\textwidth) */
-        .header-contact {
-            flex: 0 0 33%;
-            box-sizing: border-box;
-            position: relative;
-            padding-left: 1.5rem; /* Cách lề trong cho đẹp */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    #mobile-menu.open {
+      max-height: 300px;
+    }
 
-        /* Dùng Pseudo-element tạo mảng màu Teal khóa chặt vào khối Contact */
-        .header-contact::before {
-            content: '';
-            position: absolute;
-            top: -500px;
-            bottom: -500px;
-            left: 0; /* Khóa chính xác vào mép trái của khối Liên hệ */
-            right: -50vw; /* Trải dài bất tận sang lề phải màn hình */
-            background: var(--teal);
-            z-index: -1;
-        }
-
-        .header-contact a, .header-contact span {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            margin: 8px 0;
-            font-size: 0.95rem; /* Thu nhỏ chút xíu cho giống file CV */
-        }
-
-        .header-contact a:hover {
-            color: var(--accent-blue);
-        }
-
-        .header-contact i {
-            width: 25px;
-            font-size: 1.1rem;
-            text-align: center;
-            margin-right: 12px;
-            color: white; /* Đổi icon về màu trắng cho giống chuẩn LaTeX */
-        }
-
-        /* Layout các phần bên dưới giữ nguyên */
-        section {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        h2 {
-            color: var(--navy);
-            text-transform: uppercase;
-            border-bottom: 3px solid var(--teal);
-            padding-bottom: 5px;
-            margin-top: 2.5rem;
-        }
-
-        .skill-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-        }
-
-        .skill-item {
-            background: var(--light-gray);
-            padding: 10px;
-            border-left: 4px solid var(--teal);
-        }
-
-        .skill-item span {
-            font-weight: bold;
-            color: var(--teal);
-            display: block;
-        }
-
-        .project-card {
-            border: 1px solid #ddd;
-            border-left: 5px solid var(--teal);
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: white;
-            transition: 0.3s;
-        }
-
-        .project-card:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            background: var(--light-teal);
-            padding: 10px;
-            margin: -1.5rem -1.5rem 1rem -1.5rem;
-        }
-
-        .project-header h3 {
-            margin: 0;
-            color: var(--navy);
-        }
-
-        .project-date {
-            color: var(--teal);
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .project-card p { margin: 8px 0; }
-        .tech-stack { font-style: italic; color: var(--mid-gray); display: block; margin-bottom: 10px; }
-        ul { padding-left: 1.2rem; margin-top: 5px; }
-        ul li { margin-bottom: 5px; }
-
-        .cert-row { display: flex; margin-bottom: 8px; }
-        .cert-date {
-            background: var(--light-teal); color: var(--teal); padding: 5px 10px;
-            font-weight: bold; min-width: 80px; text-align: center;
-        }
-        .cert-name { background: var(--light-gray); padding: 5px 15px; flex-grow: 1; }
-
-        footer { text-align: center; padding: 3rem; background: var(--light-gray); margin-top: 4rem; }
-
-        @media (max-width: 768px) {
-            .header-content { flex-direction: column; }
-            .header-info { flex: 0 0 100%; padding-right: 0; text-align: center; }
-            .header-info h1 { font-size: 2.2rem; }
-            .header-contact { flex: 0 0 100%; padding-left: 0; margin-top: 1.5rem; align-items: center; width: 100%; padding: 2rem 0; }
-            .header-contact::before { left: -50vw; right: -50vw; } /* Kéo dài Teal toàn màn hình trên mobile */
-        }
-    </style>
+    /* Hiệu ứng gradient mờ ảo phía sau Hero section */
+    .bg-blob {
+      position: absolute;
+      filter: blur(80px);
+      z-index: -1;
+      opacity: 0.4;
+    }
+  </style>
 </head>
-<body>
 
-<header>
-    <div class="header-content">
-        <div class="header-info">
-            <h1>Nguyễn Hải Đăng</h1>
-            <p>Fullstack / Backend Developer Intern</p>
-        </div>
-        <div class="header-contact">
-            <a href="mailto:ovnhoka@gmail.com"><i class="fas fa-envelope"></i> ovnhoka@gmail.com</a>
-            <a href="tel:0768533364"><i class="fas fa-mobile-alt"></i> 0768 533 364</a>
-            <span><i class="fas fa-map-marker-alt"></i> TP. Hồ Chí Minh</span>
-            <a href="https://github.com/nguyenhaidangg" target="_blank"><i class="fab fa-github"></i> github.com/nguyenhaidangg</a>
-        </div>
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden">
+
+  <!-- Navbar -->
+  <nav class="fixed w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-indigo-600">NHD.</a>
+
+      <!-- Menu desktop -->
+      <div class="space-x-6 font-semibold text-sm text-slate-600 hidden md:block">
+        <a href="#about" class="hover:text-indigo-600 transition">About</a>
+        <a href="#skills" class="hover:text-indigo-600 transition">Skills</a>
+        <a href="#projects" class="hover:text-indigo-600 transition">Projects</a>
+        <a href="#credentials" class="hover:text-indigo-600 transition">Credentials</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="mailto:nguyenhaidang301005@gmail.com"
+          class="bg-indigo-600 text-white px-5 py-2 rounded-full font-medium hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 hidden sm:inline-block">
+          Contact Me
+        </a>
+
+        <!-- Nút hamburger, chỉ hiện trên mobile -->
+        <button id="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false"
+          class="md:hidden text-slate-700 text-2xl w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 transition">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
     </div>
-</header>
 
-<section id="objective">
-    <h2>Mục tiêu nghề nghiệp</h2>
-    <p>Sinh viên ngành Công nghệ thông tin với đam mê phát triển các hệ thống web hiện đại. Mục tiêu trở thành một Backend/Fullstack Engineer, tập trung vào việc thiết kế kiến trúc hệ thống tối ưu, có khả năng chịu tải cao và tích hợp các giải pháp AI vào sản phẩm thực tế.</p>
-</section>
-
-<section id="skills">
-    <h2>Kỹ năng chuyên môn</h2>
-    <div class="skill-grid">
-        <div class="skill-item"><span>Frontend</span>Vue.js 3, TypeScript, Tailwind CSS, HTML5/CSS3.</div>
-        <div class="skill-item"><span>Backend</span>Node.js, Express, TypeScript.</div>
-        <div class="skill-item"><span>Database</span>MySQL (Relational), MongoDB (Document), Redis (Caching), Pinecone (Vector Search).</div>
-        <div class="skill-item"><span>Công cụ</span>Git/GitHub, Docker, Linux/CLI, LaTeX, Postman.</div>
+    <!-- Menu mobile (xổ xuống) -->
+    <div id="mobile-menu" class="md:hidden bg-white/95 backdrop-blur-md border-t border-slate-100">
+      <div class="flex flex-col px-6 py-4 gap-4 font-semibold text-slate-600">
+        <a href="#about" class="hover:text-indigo-600 transition">About</a>
+        <a href="#skills" class="hover:text-indigo-600 transition">Skills</a>
+        <a href="#projects" class="hover:text-indigo-600 transition">Projects</a>
+        <a href="#credentials" class="hover:text-indigo-600 transition">Credentials</a>
+        <a href="mailto:nguyenhaidang301005@gmail.com"
+          class="bg-indigo-600 text-white px-5 py-2 rounded-full font-medium hover:bg-indigo-700 transition text-center sm:hidden">
+          Contact Me
+        </a>
+      </div>
     </div>
-</section>
+  </nav>
 
-<section id="projects">
-    <h2>Dự án tiêu biểu</h2>
+  <!-- Hero Section -->
+  <section id="about" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6 flex items-center min-h-screen">
+    <div class="bg-blob w-96 h-96 bg-indigo-300 rounded-full top-20 left-10"></div>
+    <div class="bg-blob w-96 h-96 bg-purple-300 rounded-full bottom-10 right-20"></div>
 
-    <div class="project-card">
-        <div class="project-header">
-            <h3>Job Portal - Nền tảng Tuyển dụng thông minh & Giao tiếp thời gian thực</h3>
-            <span class="project-date">02/2026 -- Hiện tại</span>
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <!-- Cột chữ -->
+      <div>
+        <p class="text-indigo-600 font-semibold mb-2 tracking-wide uppercase">Hello, I'm</p>
+        <h1 class="text-5xl lg:text-7xl font-bold text-slate-900 leading-tight mb-4">
+          Nguyễn Hải Đăng
+        </h1>
+        <h2 class="text-2xl text-slate-600 font-medium mb-6">
+          Full Stack Developer Intern
+        </h2>
+        <p class="text-slate-500 mb-8 leading-relaxed max-w-lg">
+          Full Stack Developer Intern focused on <strong class="text-slate-700">Vue 3, Node.js, and TypeScript</strong>.
+          Experienced in building RESTful APIs, developing responsive web applications, and integrating AI-powered
+          features using <strong class="text-slate-700">Gemini API</strong>. Passionate about clean architecture,
+          problem solving, and continuous learning.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#projects"
+            class="bg-slate-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-800 transition flex items-center gap-2">
+            View Projects <i class="fa-solid fa-arrow-down"></i>
+          </a>
+          <a href="https://github.com/nguyenhaidangg" target="_blank"
+            class="bg-white border-2 border-slate-200 text-slate-700 px-6 py-3 rounded-lg font-medium hover:border-slate-300 hover:bg-slate-50 transition flex items-center gap-2">
+            <i class="fa-brands fa-github text-xl"></i> GitHub
+          </a>
         </div>
-        <p><strong>Mô tả:</strong> Hệ thống kết nối Candidate và Employer với cốt lõi là hệ thống đối sánh bằng AI và Chat Real-time.</p>
-        <span class="tech-stack">Công nghệ: Vue 3, Node.js, TypeScript, MySQL, MongoDB, Redis, Pinecone, Gemini API, Socket.io.</span>
-        <p><strong>Vai trò:</strong></p>
-        <ul>
-            <li><strong>AI & Core Architecture:</strong> Thiết kế kiến trúc phân tán Polyglot Persistence (MySQL, MongoDB, Pinecone). Tích hợp Gemini API và Vector DB Pinecone để xây dựng luồng AI Matching thông minh.</li>
-            <li><strong>Real-time Communication:</strong> Chịu trách nhiệm chính thiết kế và triển khai hệ thống <strong>Chat Real-time đa luồng và Notifications tức thời sử dụng Socket.io/WebSockets</strong>. Tối ưu độ trễ truyền tải tin nhắn, xử lý trạng thái online/offline của người dùng Candidate, Employer và Admin.</li>
+      </div>
+
+      <!-- Cột hình ảnh -->
+      <div class="relative flex justify-center mt-10 md:mt-0">
+        <div
+          class="w-72 h-72 lg:w-96 lg:h-96 bg-indigo-100 rounded-full overflow-hidden border-4 border-white shadow-2xl relative z-10">
+          <img src="./images/avatar.jpg" alt="Nguyễn Hải Đăng" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-24 relative overflow-hidden bg-slate-50">
+    <div
+      class="absolute top-10 left-10 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse">
+    </div>
+    <div
+      class="absolute top-20 right-10 w-96 h-96 bg-cyan-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse"
+      style="animation-delay: 2s;"></div>
+    <div
+      class="absolute -bottom-20 left-1/2 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse"
+      style="animation-delay: 4s;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-20">
+        <h2
+          class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 tracking-tight mb-4 drop-shadow-sm">
+          Technical Arsenal
+        </h2>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto font-medium">Equipped with the latest tools to forge
+          scalable, high-performance web applications.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- 1. Frontend Card -->
+        <div class="relative group h-full">
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-500">
+          </div>
+          <div class="relative h-full bg-white/80 backdrop-blur-xl p-8 rounded-2xl ring-1 ring-slate-200 flex flex-col">
+            <div
+              class="w-14 h-14 bg-gradient-to-br from-emerald-100 to-cyan-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+              <i
+                class="fa-solid fa-code text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500"></i>
+            </div>
+            <h3
+              class="text-2xl font-bold text-slate-800 mb-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-600 group-hover:to-cyan-600 transition-all">
+              Frontend</h3>
+            <div class="flex flex-wrap gap-2.5 mt-auto">
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:text-white hover:border-transparent transition-all cursor-default">Vue
+                3</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:text-white hover:border-transparent transition-all cursor-default">Tailwind
+                CSS</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:text-white hover:border-transparent transition-all cursor-default">Pinia</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:text-white hover:border-transparent transition-all cursor-default">Vue
+                Router</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:text-white hover:border-transparent transition-all cursor-default">Axios</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:text-white hover:border-transparent transition-all cursor-default">Responsive
+                Design</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:text-white hover:border-transparent transition-all cursor-default">HTML5/CSS3</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Backend Card -->
+        <div class="relative group h-full">
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-r from-rose-400 to-orange-400 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-500">
+          </div>
+          <div class="relative h-full bg-white/80 backdrop-blur-xl p-8 rounded-2xl ring-1 ring-slate-200 flex flex-col">
+            <div
+              class="w-14 h-14 bg-gradient-to-br from-rose-100 to-orange-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300">
+              <i
+                class="fa-solid fa-server text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500"></i>
+            </div>
+            <h3
+              class="text-2xl font-bold text-slate-800 mb-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-rose-600 group-hover:to-orange-600 transition-all">
+              Backend</h3>
+            <div class="flex flex-wrap gap-2.5 mt-auto">
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-rose-500 hover:to-orange-500 hover:text-white hover:border-transparent transition-all cursor-default">Node.js</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-rose-500 hover:to-orange-500 hover:text-white hover:border-transparent transition-all cursor-default">Express.js</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-rose-500 hover:to-orange-500 hover:text-white hover:border-transparent transition-all cursor-default">TypeScript</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-rose-500 hover:to-orange-500 hover:text-white hover:border-transparent transition-all cursor-default">JavaScript</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-rose-500 hover:to-orange-500 hover:text-white hover:border-transparent transition-all cursor-default">RESTful
+                APIs</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-rose-500 hover:to-orange-500 hover:text-white hover:border-transparent transition-all cursor-default">JWT</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-rose-500 hover:to-orange-500 hover:text-white hover:border-transparent transition-all cursor-default">RBAC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Databases Card -->
+        <div class="relative group h-full">
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-500">
+          </div>
+          <div class="relative h-full bg-white/80 backdrop-blur-xl p-8 rounded-2xl ring-1 ring-slate-200 flex flex-col">
+            <div
+              class="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+              <i
+                class="fa-solid fa-database text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500"></i>
+            </div>
+            <h3
+              class="text-2xl font-bold text-slate-800 mb-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 transition-all">
+              Databases</h3>
+            <div class="flex flex-wrap gap-2.5 mt-auto">
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:text-white hover:border-transparent transition-all cursor-default">SQL
+                Server</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:text-white hover:border-transparent transition-all cursor-default">MySQL</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:text-white hover:border-transparent transition-all cursor-default">MongoDB</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:text-white hover:border-transparent transition-all cursor-default">Redis</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:text-white hover:border-transparent transition-all cursor-default">SQL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Arch & Tools Card -->
+        <div class="relative group h-full">
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-r from-fuchsia-400 to-purple-400 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-500">
+          </div>
+          <div class="relative h-full bg-white/80 backdrop-blur-xl p-8 rounded-2xl ring-1 ring-slate-200 flex flex-col">
+            <div
+              class="w-14 h-14 bg-gradient-to-br from-fuchsia-100 to-purple-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300">
+              <i
+                class="fa-solid fa-layer-group text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-500"></i>
+            </div>
+            <h3
+              class="text-2xl font-bold text-slate-800 mb-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-fuchsia-600 group-hover:to-purple-600 transition-all">
+              Arch & Tools</h3>
+            <div class="flex flex-wrap gap-2.5 mt-auto">
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-fuchsia-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all cursor-default">MVC
+                / Controller-Service</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-fuchsia-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all cursor-default">Central
+                Error Handling</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-fuchsia-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all cursor-default">Git/GitHub</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-fuchsia-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all cursor-default">Postman</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-fuchsia-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all cursor-default">Cloudinary</span>
+              <span
+                class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-lg shadow-sm hover:bg-gradient-to-r hover:from-fuchsia-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all cursor-default">Gemini
+                API</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section (Đã bọc thẻ Section đàng hoàng) -->
+  <section id="projects" class="py-24 bg-white relative">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">Featured Projects</h2>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto font-medium">Showcasing my journey of turning complex logic
+          into seamless digital experiences.</p>
+      </div>
+
+      <!-- Project 1: Job Portal AI -->
+      <div
+        class="bg-white p-8 md:p-10 lg:p-12 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <span
+            class="px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-bold uppercase tracking-wider rounded-full">Recruitment
+            Platform</span>
+        </div>
+
+        <h3 class="text-3xl font-bold text-slate-900 mb-4">Job Portal AI</h3>
+
+        <p class="text-slate-600 mb-6 leading-relaxed">
+          A smart recruitment system applying AI for semantic job search and automated resume analysis — optimizing the
+          hiring process beyond conventional keyword matching.
+        </p>
+
+        <ul class="space-y-4 mb-8 text-slate-700">
+          <li class="flex items-start gap-3">
+            <span class="text-indigo-500 font-bold mt-0.5">→</span>
+            <span><strong>Semantic Search & Analysis:</strong> Powered by Vector Embedding (Pinecone) and Gemini
+              API.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-indigo-500 font-bold mt-0.5">→</span>
+            <span><strong>Polyglot Persistence:</strong> Dual database architecture combining MySQL (Relational) and
+              MongoDB (NoSQL).</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-indigo-500 font-bold mt-0.5">→</span>
+            <span><strong>Security & Performance:</strong> JWT/RBAC authorization and Redis caching for fast API
+              responses.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-indigo-500 font-bold mt-0.5">→</span>
+            <span><strong>Fullstack Architecture:</strong> Node.js/Express.js Backend + Vue 3 Frontend.</span>
+          </li>
         </ul>
-        <p><strong>Kết quả:</strong> Vận hành trơn tru luồng AI Matching. Hệ thống giao tiếp thời gian thực hoạt động ổn định với độ trễ cực thấp, nâng cao trải nghiệm tương tác.</p>
-    </div>
 
-    <div class="project-card">
-        <div class="project-header">
-            <h3>Fashion Shop - Sàn thương mại điện tử đa người dùng</h3>
-            <span class="project-date">10/2025 -- 12/2025</span>
+        <div class="flex flex-wrap gap-2 mb-8">
+          <span
+            class="px-2.5 py-1 bg-slate-50 text-slate-700 text-sm font-medium rounded-md border border-slate-200">Vue
+            3</span>
+          <span
+            class="px-2.5 py-1 bg-slate-50 text-slate-700 text-sm font-medium rounded-md border border-slate-200">TypeScript</span>
+          <span
+            class="px-2.5 py-1 bg-slate-50 text-slate-700 text-sm font-medium rounded-md border border-slate-200">Tailwind
+            CSS</span>
+          <span
+            class="px-2.5 py-1 bg-slate-50 text-slate-700 text-sm font-medium rounded-md border border-slate-200">Pinia</span>
+          <span
+            class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-sm font-medium rounded-md border border-emerald-100">Node.js</span>
+          <span
+            class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-sm font-medium rounded-md border border-emerald-100">Express.js</span>
+          <span
+            class="px-2.5 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-md border border-blue-100">MySQL</span>
+          <span
+            class="px-2.5 py-1 bg-green-50 text-green-700 text-sm font-medium rounded-md border border-green-100">MongoDB</span>
+          <span
+            class="px-2.5 py-1 bg-red-50 text-red-700 text-sm font-medium rounded-md border border-red-100">Redis</span>
+          <span
+            class="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-sm font-bold rounded-md border border-indigo-200 shadow-sm">Pinecone</span>
+          <span
+            class="px-2.5 py-1 bg-purple-50 text-purple-700 text-sm font-bold rounded-md border border-purple-200 shadow-sm">Gemini
+            API</span>
         </div>
-        <p><strong>Mô tả:</strong> Xây dựng nền tảng Marketplace hỗ trợ đa người bán (Multi-vendor), cho phép người dùng đăng ký gian hàng và tự quản lý kinh doanh.</p>
-        <span class="tech-stack">Công nghệ: Vue 3, Node.js, Express, TypeScript, SQL Server, Redis, VNPay, Node-cron.</span>
-        <p><strong>Vai trò:</strong></p>
-        <ul>
-            <li><strong>Database & Authorization:</strong> Thiết kế cơ sở dữ liệu phân quyền phức tạp (Buyer, Seller, Admin) với SQL Server và xử lý xác thực JWT.</li>
-            <li><strong>Seller Dashboard & Features:</strong> Xây dựng Dashboard chuyên biệt cho Seller. Tích hợp Node-cron để tự động hóa các sự kiện giảm giá Flash sale và VNPay cho thanh toán trực tuyến.</li>
-        </ul>
-        <p><strong>Kết quả:</strong> Hệ thống xử lý logic nghiệp vụ chặt chẽ, tối ưu trải nghiệm người bán và đảm bảo tính nhất quán dữ liệu thông qua Redis Cache.</p>
-    </div>
 
-    <div class="project-card">
-        <div class="project-header">
-            <h3>Fashion Shop (Hybrid & Distributed DB)</h3>
-            <span class="project-date">10/2025 -- 12/2025</span>
+        <div class="flex flex-wrap gap-4 mt-auto">
+          <a href="https://github.com/nguyenhaidangg/JobPortal" target="_blank"
+            class="px-6 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition flex items-center gap-2">
+            <i class="fa-brands fa-github text-lg"></i> Source Code
+          </a>
+          <a href="#"
+            class="px-6 py-2.5 bg-white border-2 border-slate-200 text-slate-700 text-sm font-semibold rounded-lg hover:border-indigo-600 hover:text-indigo-600 transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+          </a>
         </div>
-        <p><strong>Mô tả:</strong> Hệ thống Thương mại điện tử phân tán vùng miền. Nền tảng E-commerce áp dụng mô hình Hybrid Database, tự động định tuyến và hiển thị sản phẩm dựa trên khu vực địa lý của người dùng.</p>
-        <span class="tech-stack">Công nghệ: Vue 3, Node.js, TypeScript, SQL Server (Replication), MongoDB, Cloudinary, VNPay.</span>
-        <p><strong>Vai trò & Đóng góp:</strong></p>
-        <ul>
-            <li><em>Kiến trúc Phân tán (Distributed System):</em> Cấu hình <strong>SQL Server Replication</strong> (Distributor, Publication, Subscription) để phân mảnh và đồng bộ dữ liệu giao dịch từ Server Trung tâm về 3 chi nhánh (Hà Nội, Đà Nẵng, TP.HCM).</li>
-            <li><em>Hybrid Database:</em> Triển khai mô hình lưu trữ đa hệ quản trị. Sử dụng SQL Server cho các giao dịch lõi (đảm bảo ACID) và MongoDB để lưu trữ dữ liệu phi cấu trúc, tích hợp Cloudinary quản lý Media.</li>
+      </div>
+
+      <!-- Project 2: Fashion Shop -->
+      <div
+        class="bg-white p-8 md:p-10 lg:p-12 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <span
+            class="px-3 py-1 bg-rose-50 text-rose-600 text-xs font-bold uppercase tracking-wider rounded-full">E-Commerce
+            Platform</span>
+        </div>
+
+        <h3 class="text-3xl font-bold text-slate-900 mb-4">Fashion Shop</h3>
+
+        <p class="text-slate-600 mb-6 leading-relaxed">
+          A full-stack e-commerce platform featuring an interactive customer storefront and an intuitive administration
+          dashboard. Built for high concurrency and seamless user experiences.
+        </p>
+
+        <ul class="space-y-4 mb-8 text-slate-700">
+          <li class="flex items-start gap-3">
+            <span class="text-rose-500 font-bold mt-0.5">→</span>
+            <span><strong>Payment & Processing:</strong> Integrated VNPay payment gateway to support secure online
+              payment and order processing.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-rose-500 font-bold mt-0.5">→</span>
+            <span><strong>Automated Flash Sales:</strong> Optimized system performance using Redis caching and automated
+              flash sale processing with Node-cron.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-rose-500 font-bold mt-0.5">→</span>
+            <span><strong>Polyglot Persistence:</strong> Designed RESTful APIs following a Controller-Service
+              architecture utilizing MySQL and MongoDB.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-rose-500 font-bold mt-0.5">→</span>
+            <span><strong>Security & Authorization:</strong> Implemented JWT authentication, RBAC, and centralized error
+              handling for robust application security.</span>
+          </li>
         </ul>
-        <p><strong>Kết quả:</strong> Xây dựng thành công cơ sở dữ liệu phân tán, đảm bảo tính nhất quán (Data Consistency) trên toàn bộ các node và xử lý mượt mà nghiệp vụ thanh toán, giỏ hàng theo từng chi nhánh.</p>
+
+        <div class="flex flex-wrap gap-2 mb-8">
+          <span
+            class="px-2.5 py-1 bg-slate-50 text-slate-700 text-sm font-medium rounded-md border border-slate-200">Vue
+            3</span>
+          <span
+            class="px-2.5 py-1 bg-slate-50 text-slate-700 text-sm font-medium rounded-md border border-slate-200">TypeScript</span>
+          <span
+            class="px-2.5 py-1 bg-slate-50 text-slate-700 text-sm font-medium rounded-md border border-slate-200">Tailwind
+            CSS</span>
+          <span
+            class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-sm font-medium rounded-md border border-emerald-100">Node.js</span>
+          <span
+            class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-sm font-medium rounded-md border border-emerald-100">Express.js</span>
+          <span
+            class="px-2.5 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-md border border-blue-100">MySQL</span>
+          <span
+            class="px-2.5 py-1 bg-green-50 text-green-700 text-sm font-medium rounded-md border border-green-100">MongoDB</span>
+          <span
+            class="px-2.5 py-1 bg-red-50 text-red-700 text-sm font-medium rounded-md border border-red-100">Redis</span>
+          <span
+            class="px-2.5 py-1 bg-rose-50 text-rose-700 text-sm font-bold rounded-md border border-rose-200 shadow-sm">VNPay</span>
+        </div>
+
+        <div class="flex flex-wrap gap-4 mt-auto">
+          <a href="https://github.com/nguyenhaidangg" target="_blank"
+            class="px-6 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition flex items-center gap-2">
+            <i class="fa-brands fa-github text-lg"></i> Source Code
+          </a>
+          <a href="https://fashion.hoangvanhai.me/" target="_blank"
+            class="px-6 py-2.5 bg-white border-2 border-slate-200 text-slate-700 text-sm font-semibold rounded-lg hover:border-rose-600 hover:text-rose-600 transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 3: Fashion Shop Distributed -->
+      <div
+        class="bg-white p-8 md:p-10 lg:p-12 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 mb-12 flex flex-col lg:flex-row gap-12">
+        <div class="lg:w-1/2 flex flex-col">
+          <div class="flex items-center gap-3 mb-6">
+            <span
+              class="px-3 py-1 bg-amber-50 text-amber-600 text-xs font-bold uppercase tracking-wider rounded-md">Distributed
+              DB</span>
+            <span
+              class="px-3 py-1 bg-amber-50 text-amber-600 text-xs font-bold uppercase tracking-wider rounded-md">Hybrid</span>
+          </div>
+
+          <h3 class="text-3xl font-bold text-slate-900 leading-tight mb-4">
+            Fashion Shop <br>
+            <span class="text-amber-500">Distributed</span>
+          </h3>
+
+          <p class="text-slate-600 mb-8 leading-relaxed">
+            An advanced version of Fashion Shop applying a <strong>Distributed Database</strong> architecture: SQL
+            Server Replication by region + MongoDB Hybrid. A 4-role system with separate management scopes for each
+            branch.
+          </p>
+
+          <ul class="space-y-4 mb-10 text-slate-700 text-sm">
+            <li class="flex items-start gap-3">
+              <span class="text-amber-500 font-bold mt-0.5">→</span>
+              <span>SQL Server Replication: Central distributed to Hanoi / Da Nang / HCMC</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-500 font-bold mt-0.5">→</span>
+              <span>Display products based on user's geographic location (branch_code)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-500 font-bold mt-0.5">→</span>
+              <span>Flash Sale engine automatically triggered by schedule</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-500 font-bold mt-0.5">→</span>
+              <span>Multi-branch management: independent products, users, vouchers</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-500 font-bold mt-0.5">→</span>
+              <span>VNPay + COD payment, Nodemailer email notifications</span>
+            </li>
+          </ul>
+
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span
+              class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">Node.js</span>
+            <span
+              class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">Express.js</span>
+            <span
+              class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">TypeScript</span>
+            <span class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">Vue
+              3</span>
+            <span class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">SQL
+              Server</span>
+            <span
+              class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">MongoDB</span>
+            <span
+              class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">Replication</span>
+            <span
+              class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">Cloudinary</span>
+            <span
+              class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">VNPay</span>
+            <span
+              class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded border border-slate-200">node-cron</span>
+          </div>
+
+          <div class="mt-auto">
+            <a href="https://github.com/nguyenhaidangg" target="_blank"
+              class="px-6 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition flex items-center gap-2 w-fit">
+              <i class="fa-brands fa-github text-lg"></i> Source Code
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:w-1/2 flex flex-col gap-6">
+          <div class="bg-slate-50/70 p-6 rounded-2xl border border-slate-100">
+            <h4 class="text-xs font-bold text-indigo-400 tracking-widest uppercase mb-3">Database Architecture</h4>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              <strong>SQL Server</strong> distributed by region with Replication: Central → Hanoi / Da Nang / HCMC.
+              <strong>MongoDB</strong> for media & unstructured data via Cloudinary.
+            </p>
+          </div>
+
+          <div class="bg-slate-50/70 p-6 rounded-2xl border border-slate-100">
+            <h4 class="text-xs font-bold text-indigo-400 tracking-widest uppercase mb-4">Authorization System</h4>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="px-3 py-1 bg-white border border-slate-200 text-slate-600 text-xs rounded shadow-sm">User</span>
+              <span
+                class="px-3 py-1 bg-white border border-slate-200 text-slate-600 text-xs rounded shadow-sm">Seller</span>
+              <span class="px-3 py-1 bg-white border border-slate-200 text-slate-600 text-xs rounded shadow-sm">Branch
+                Admin</span>
+              <span class="px-3 py-1 bg-white border border-slate-200 text-slate-600 text-xs rounded shadow-sm">Central
+                Admin</span>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              4 privilege levels with specific management scopes from orders and products to the entire system.
+            </p>
+          </div>
+
+          <div class="bg-slate-50/70 p-6 rounded-2xl border border-slate-100 h-full">
+            <h4 class="text-xs font-bold text-indigo-400 tracking-widest uppercase mb-4">Differences From V1</h4>
+            <ul class="space-y-3 text-slate-600 text-sm">
+              <li class="flex items-start gap-2">
+                <span class="text-indigo-400 font-bold">→</span> True distributed data across SQL nodes
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-indigo-400 font-bold">→</span> Geo-routing: querying the correct node based on region
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-indigo-400 font-bold">→</span> Distributor, Publisher, Subscriber configuration
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-indigo-400 font-bold">→</span> Complete Hybrid DB model for production
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section id="certificates">
-    <h2>Chứng chỉ & Khóa học chuyên môn</h2>
-    <div class="cert-row"><div class="cert-date">04/2026</div><div class="cert-name"><strong>Hands-On AI: Building LLM-Powered Apps</strong> — <em>LinkedIn Learning</em></div></div>
-    <div class="cert-row"><div class="cert-date">04/2026</div><div class="cert-name"><strong>DevOps 101 & CI/CD for Beginners</strong> — <em>Simplilearn</em></div></div>
-    <div class="cert-row"><div class="cert-date">03/2026</div><div class="cert-name"><strong>Node.js: Design Patterns</strong> — <em>LinkedIn Learning</em></div></div>
-    <div class="cert-row"><div class="cert-date">03/2026</div><div class="cert-name"><strong>Intro to Large Language Models & Generative AI</strong> — <em>Google Cloud</em></div></div>
-    <div class="cert-row"><div class="cert-date">03/2026</div><div class="cert-name"><strong>Introduction to Cyber Security</strong> — <em>Simplilearn</em></div></div>
-</section>
+  <!-- Education & Credentials Section (Mới được thêm vào) -->
+  <section id="credentials" class="py-24 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-6">
 
-<section id="education">
-    <h2>Học vấn</h2>
-    <div class="cert-row">
-        <div class="cert-date">2023 - Nay</div>
-        <div class="cert-name">Sinh viên ngành Công nghệ thông tin — Trường Đại học Sư phạm TP.HCM</div>
+      <!-- Phần Chứng Chỉ -->
+      <div class="mb-16">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6 border-b-2 border-slate-200 pb-3 uppercase tracking-wide">
+          Certifications & Professional Courses
+        </h3>
+
+        <div class="flex flex-col gap-2">
+          <div
+            class="flex flex-col md:flex-row md:items-center py-4 border-b border-slate-200 hover:bg-white hover:shadow-sm transition px-4 rounded-lg">
+            <div class="md:w-32 text-indigo-600 font-bold text-sm mb-1 md:mb-0">04/2026</div>
+            <div class="flex-1 text-slate-800 font-semibold">Hands-On AI: Building LLM-Powered Apps <span
+                class="text-slate-500 font-normal italic">— LinkedIn Learning</span></div>
+          </div>
+
+          <div
+            class="flex flex-col md:flex-row md:items-center py-4 border-b border-slate-200 hover:bg-white hover:shadow-sm transition px-4 rounded-lg">
+            <div class="md:w-32 text-indigo-600 font-bold text-sm mb-1 md:mb-0">04/2026</div>
+            <div class="flex-1 text-slate-800 font-semibold">DevOps 101 & CI/CD for Beginners <span
+                class="text-slate-500 font-normal italic">— Simplilearn</span></div>
+          </div>
+
+          <div
+            class="flex flex-col md:flex-row md:items-center py-4 border-b border-slate-200 hover:bg-white hover:shadow-sm transition px-4 rounded-lg">
+            <div class="md:w-32 text-indigo-600 font-bold text-sm mb-1 md:mb-0">03/2026</div>
+            <div class="flex-1 text-slate-800 font-semibold">Node.js: Design Patterns <span
+                class="text-slate-500 font-normal italic">— LinkedIn Learning</span></div>
+          </div>
+
+          <div
+            class="flex flex-col md:flex-row md:items-center py-4 border-b border-slate-200 hover:bg-white hover:shadow-sm transition px-4 rounded-lg">
+            <div class="md:w-32 text-indigo-600 font-bold text-sm mb-1 md:mb-0">03/2026</div>
+            <div class="flex-1 text-slate-800 font-semibold">Intro to Large Language Models & Generative AI <span
+                class="text-slate-500 font-normal italic">— Google Cloud</span></div>
+          </div>
+
+          <div
+            class="flex flex-col md:flex-row md:items-center py-4 border-b border-slate-200 hover:bg-white hover:shadow-sm transition px-4 rounded-lg">
+            <div class="md:w-32 text-indigo-600 font-bold text-sm mb-1 md:mb-0">03/2026</div>
+            <div class="flex-1 text-slate-800 font-semibold">Introduction to Cyber Security <span
+                class="text-slate-500 font-normal italic">— Simplilearn</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phần Học Vấn -->
+      <div>
+        <h3 class="text-2xl font-bold text-slate-900 mb-6 border-b-2 border-slate-200 pb-3 uppercase tracking-wide">
+          Education
+        </h3>
+
+        <div class="flex flex-col gap-2">
+          <div
+            class="flex flex-col md:flex-row md:items-center py-4 border-b border-slate-200 hover:bg-white hover:shadow-sm transition px-4 rounded-lg">
+            <div class="md:w-32 text-indigo-600 font-bold text-sm mb-1 md:mb-0">2023 - Present</div>
+            <div class="flex-1 text-slate-800 font-semibold">Bachelor of Information Technology <span
+                class="text-slate-500 font-normal italic">— Ho Chi Minh City University of Education</span></div>
+          </div>
+        </div>
+      </div>
+
     </div>
-</section>
+  </section>
 
-<footer>
-    <p>&copy; 2026 Nguyễn Hải Đăng | Sinh viên CNTT - ĐH Sư phạm TP.HCM</p>
-</footer>
+  <!-- Footer -->
+  <footer class="bg-white py-8 border-t border-slate-100 text-center text-slate-500 text-sm">
+    <p>© 2026 Nguyễn Hải Đăng. Build with Vue/Tailwind aesthetic.</p>
+  </footer>
+
+  <!-- Xử lý mở/đóng menu mobile -->
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = menuToggle.querySelector('i');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+      menuIcon.classList.toggle('fa-bars', !isOpen);
+      menuIcon.classList.toggle('fa-xmark', isOpen);
+    });
+
+    // Tự đóng menu khi bấm vào 1 tab (About, Skills, Projects, Credentials...)
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+      });
+    });
+  </script>
 
 </body>
+
 </html>
